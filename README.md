@@ -163,4 +163,6 @@ Open `colab/finetune_chat_models.ipynb` for the notebook workflow for Mistral an
 
 - Code in this repository is released under the `MIT` License. See `LICENSE`.
 - Citation metadata for GitHub and reference managers is provided in `CITATION.cff`.
-- If you use this repository, please cite: `Perez-Toro, P. A., Almizel, M., Noth, E., Maier, A., and Arias-Vergara, T. Generating Alzheimer's Narratives Using Large Language Models.`
+- The paper is accepted for `BMC Medical Informatics and Decision Making`.
+- Preprint: `https://www.researchsquare.com/article/rs-7631242/v1`
+- If you use this repository, please cite: `Perez-Toro, P. A., Almizel, M., Noth, E., Maier, A., and Arias-Vergara, T. Generating Alzheimer's Narratives Using Large Language Models. BMC Medical Informatics and Decision Making.`
