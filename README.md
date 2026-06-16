@@ -34,7 +34,9 @@ These models are evaluated in two settings:
 
 ## Main Results
 
-![Main paper results](assets/figures/radar_plot.svg)
+<p align="center">
+  <img src="assets/figures/radar_plot.svg" alt="Main paper results" width="560">
+</p>
 
 Key findings from the paper:
 
@@ -43,6 +45,30 @@ Key findings from the paper:
 - In downstream AD detection, the best result came from `Mistral 7B` in `H2B Mix2GT` with `F1 = 0.843`.
 - A classifier trained only on original narratives reported `F1 = 0.72`, showing the value of synthetic augmentation.
 - Human evaluation also ranked Mistral highest overall, with strong fluency, plausibility, and diagnostic realism.
+
+| Result area | Best finding |
+|---|---|
+| Narrative generation | `Mistral 7B` delivered the strongest overall semantic and lexical performance |
+| AD generation quality | `BLEU = 0.440`, `SemScore = 0.773`, `BERTScore = 0.909` in `Human-to-Bot` |
+| AD detection | `Mistral 7B` reached `F1 = 0.843` in `H2B Mix2GT` |
+| Baseline reference | Original-only classification achieved `F1 = 0.72` |
+| Human evaluation | Mistral ranked highest in realism and diagnostic appropriateness |
+
+## Generated Narrative Examples
+
+Prompt used in the paper:
+
+> What action do you see going on in that picture?
+
+Selected examples from the manuscript:
+
+| Model | AD-style generated narrative | HC-style generated narrative |
+|---|---|---|
+| GPT-2 | `mother at sink, water running over, boy on stool taking cookies` | `the boy is reaching for cookies on a stool while his sister watches and the mother washes dishes` |
+| Mistral | `the boy is taking cookies and the stool may fall while water runs from the sink` | `the boy is standing on a stool reaching for cookies while his sister reaches up and the sink is overflowing as the mother dries dishes` |
+| Qwen | `boy reaching for cookies on stool, water spilling from sink` | `the boy stands on a stool taking cookies while the girl reaches up and the mother washes dishes as water runs from the sink` |
+
+These examples reflect one of the main qualitative findings of the paper: AD-style generations are often shorter and less detailed, while HC-style generations tend to integrate more of the scene and produce fuller descriptions.
 
 ## Included Models
 
