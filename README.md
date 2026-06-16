@@ -2,6 +2,16 @@
 
 This repository packages the training, evaluation, and embedding workflows used for the AD narrative generation paper into a reproducible structure with standardized parameters across model families.
 
+## Paper Visuals
+
+### Main Results Snapshot
+
+![Main paper results](assets/figures/radar_plot.svg)
+
+### Methodology / Pipeline
+
+![Methodology pipeline](assets/figures/methodology.svg)
+
 ## What Changed
 
 - Removed hard-coded local paths.
@@ -66,4 +76,3 @@ python scripts/embed_texts.py --input artifacts/groundtruth/Groundtruth.csv --te
 - `gpt2` size mapping is standardized as `small -> gpt2`, `base -> gpt2-medium`, `large -> gpt2-large`.
 - All families now share the same generation defaults unless explicitly overridden.
 - Training defaults are centralized; family-specific overrides are kept minimal and transparent.
-
