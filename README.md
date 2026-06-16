@@ -1,37 +1,86 @@
 # Generating AD Narratives
 
-This repository packages the training, evaluation, and embedding workflows used for the AD narrative generation paper into a reproducible structure with standardized parameters across model families.
+<p align="center">
+  Synthetic narrative generation for Alzheimer's disease research using GPT-2, T5, Flan-T5, LLaMA-2, Mistral, Qwen3, and a standardized DeepSeek/Qwen chat workflow.
+</p>
 
-## Paper Visuals
+<p align="center">
+  <strong>Human-to-Bot</strong> and <strong>Bot-to-Bot</strong> simulation, standardized parameters, automatic evaluation, embeddings, and a Colab path for large chat models.
+</p>
 
-### Main Results Snapshot
+## At a Glance
 
-![Main paper results](assets/figures/radar_plot.svg)
+This repository turns the paper code into a cleaner and reproducible project structure. The original scripts and notebooks were aligned so all model families share the same argument style, centralized defaults, and output layout.
 
-### Methodology / Pipeline
+- Dataset: DementiaBank Pitt Corpus Cookie Theft interactions
+- Task: generate AD and HC narratives from interviewer-participant QA pairs
+- Scenarios: `Human-to-Bot` and `Bot-to-Bot`
+- Downstream use: synthetic data augmentation for text-based AD detection
+- Coverage: classic baselines, instruction models, chat LoRA models, and Colab workflows
+
+## Methodology
+
+The pipeline leads the page because it is the core story of the paper.
 
 ![Methodology pipeline](assets/figures/methodology.svg)
 
-## What Changed
+The framework fine-tunes:
 
-- Removed hard-coded local paths.
-- Removed embedded `wandb` API keys.
-- Standardized CLI arguments across `gpt2`, `t5`, `flan-t5`, `llama2`, `mistral`, `qwen3`, and `deepseek-r1-qwen`.
-- Centralized training and generation defaults in one config file.
-- Standardized output locations under `artifacts/`.
+- an answer-generation model that maps interviewer questions to participant responses
+- a question-generation model that maps participant responses back to interviewer-style prompts
+
+Those models are then evaluated in two settings:
+
+- `Human-to-Bot`: original corpus questions are used to generate narratives
+- `Bot-to-Bot`: one model asks and the other answers to simulate full interactions
+
+## Key Results
+
+![Main paper results](assets/figures/radar_plot.svg)
+
+Highlights pulled from the manuscript:
+
+- Mistral, LLaMA, and Qwen were the strongest generation models across semantic and lexical metrics.
+- In `Human-to-Bot`, Mistral 7B achieved the strongest AD generation scores with `BLEU = 0.440`, `SemScore = 0.773`, and `BERTScore = 0.909`.
+- In downstream AD detection, the best result came from `Mistral 7B` in `H2B Mix2GT` with `F1 = 0.843`.
+- A classifier trained only on original narratives reported `F1 = 0.72`, showing the practical value of synthetic augmentation.
+- Human evaluation also ranked Mistral highest overall, with strong fluency, plausibility, and diagnostic realism.
+
+## Supported Models
+
+| Family | Sizes | Entry point | Status |
+|---|---|---|---|
+| GPT-2 | `small`, `base`, `large` | `scripts/train.py` | Included |
+| T5 | `small`, `base`, `large` | `scripts/train.py` | Included |
+| Flan-T5 | `small`, `base`, `large` | `scripts/train.py` | Included |
+| LLaMA-2 | `7b` | `scripts/train_chat_lora.py` | Included |
+| Mistral | `7b` | `scripts/train_chat_lora.py` | Included |
+| Qwen3 | `8b` | `scripts/train_chat_lora.py` | Included |
+| DeepSeek-R1-Qwen | `8b` | `scripts/train_chat_lora.py` | Experimental workflow included |
+
+The model-to-paper mapping and source provenance are documented in `docs/model_coverage.md`.
+
+## What Was Standardized
+
+- Removed hard-coded local paths
+- Removed embedded secrets such as `wandb` and Hugging Face credentials
+- Standardized CLI arguments across all model families
+- Centralized defaults in `configs/experiments.json`
+- Standardized output locations under `artifacts/`
+- Added one Colab notebook path for the shared chat-style workflows
 
 ## Repository Layout
 
-- `configs/experiments.json`: shared defaults and model registry
-- `scripts/train.py`: fine-tuning entry point
-- `scripts/train_chat_lora.py`: chat-style LoRA fine-tuning for LLaMA, Mistral, Qwen, and DeepSeek-style runs
-- `scripts/evaluate.py`: generation and metric export
+- `configs/experiments.json`: shared defaults, generation settings, and model registry
+- `scripts/train.py`: training for GPT-2, T5, and Flan-T5
+- `scripts/train_chat_lora.py`: LoRA fine-tuning for LLaMA-2, Mistral, Qwen3, and DeepSeek-style runs
+- `scripts/evaluate.py`: generation and automatic metrics
 - `scripts/embed_texts.py`: embedding extraction for generated or ground-truth text
 - `docs/model_coverage.md`: paper-to-code coverage map
-- `colab/finetune_chat_models.ipynb`: Colab workflow for chat-style model training
+- `colab/finetune_chat_models.ipynb`: Colab workflow for large chat-style models
 - `src/ad_narratives/`: shared utilities
 
-## Expected Data Layout
+## Data Format
 
 The scripts expect CSV files with `question` and `answer` columns.
 
@@ -45,25 +94,25 @@ data/
   test_QA_HC_data.csv
 ```
 
-If you want to use the `all_tog` variant from the original code, point `--data-dir` to that directory instead.
+If you want to use the original `all_tog` variant, point `--data-dir` to that directory instead.
 
-## Install
+## How To Use
+
+### 1. Install
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Train
+### 2. Train classic baselines
 
 ```bash
-python scripts/train.py --family flan-t5 --size base --group AD --data-dir ./data
-python scripts/train.py --family t5 --size large --group HC --data-dir ./data/all_tog
 python scripts/train.py --family gpt2 --size small --group AD --data-dir ./data
+python scripts/train.py --family t5 --size large --group HC --data-dir ./data
+python scripts/train.py --family flan-t5 --size base --group AD --data-dir ./data
 ```
 
-## Train Chat Models
-
-Use this path for the paper's chat/instruction families and the extra DeepSeek-style notebook workflow.
+### 3. Train chat-style models
 
 ```bash
 python scripts/train_chat_lora.py --family llama2 --size 7b --group AD --data-dir ./data
@@ -74,24 +123,27 @@ python scripts/train_chat_lora.py --family deepseek-r1-qwen --size 8b --group HC
 
 For gated checkpoints such as LLaMA-2, export `HF_TOKEN` before running.
 
-## Evaluate
+### 4. Evaluate generations
 
 ```bash
 python scripts/evaluate.py --family flan-t5 --size base --group AD --data-dir ./data --combine-splits
 python scripts/evaluate.py --family mistral --size 7b --group AD --data-dir ./data --combine-splits
 ```
 
-## Embeddings
+### 5. Extract embeddings
 
 ```bash
 python scripts/embed_texts.py --input artifacts/predictions/flan-t5_base_AD_predictions.csv --text-column generated_answer --label generated
 python scripts/embed_texts.py --input artifacts/groundtruth/Groundtruth.csv --text-column sentence --label groundtruth
 ```
 
+### 6. Use the Colab workflow
+
+Open `colab/finetune_chat_models.ipynb` for the notebook version of the shared Mistral/Qwen-style training path.
+
 ## Notes
 
-- `gpt2` size mapping is standardized as `small -> gpt2`, `base -> gpt2-medium`, `large -> gpt2-large`.
-- The paper model set is documented in `docs/model_coverage.md`.
-- The Colab-ready workflow is in `colab/finetune_chat_models.ipynb`.
-- All families now share the same generation defaults unless explicitly overridden.
-- Training defaults are centralized; family-specific overrides are kept minimal and transparent.
+- `gpt2` uses the standardized mapping `small -> gpt2`, `base -> gpt2-medium`, `large -> gpt2-large`.
+- Chat models use shared LoRA defaults with minimal family-specific overrides.
+- The standardized configuration uses `seed = 42`, shared generation defaults, and centralized training hyperparameters.
+- The repository focuses on reproducibility and clearer reuse of the paper workflows rather than reproducing every original local environment assumption.
