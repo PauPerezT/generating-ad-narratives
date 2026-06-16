@@ -1,0 +1,60 @@
+{
+  "seed": 42,
+  "prefix": "answer the question: ",
+  "max_source_length": 128,
+  "max_target_length": 128,
+  "training": {
+    "learning_rate": 0.0001,
+    "num_train_epochs": 20,
+    "per_device_train_batch_size": 8,
+    "per_device_eval_batch_size": 8,
+    "weight_decay": 0.01,
+    "save_total_limit": 2,
+    "early_stopping_patience": 5,
+    "evaluation_strategy": "epoch",
+    "save_strategy": "epoch",
+    "logging_strategy": "epoch"
+  },
+  "generation": {
+    "num_beams": 3,
+    "max_new_tokens": 100,
+    "min_new_tokens": 5,
+    "no_repeat_ngram_size": 2,
+    "top_k": 50,
+    "top_p": 0.95,
+    "temperature": 0.7,
+    "do_sample": true
+  },
+  "models": {
+    "flan-t5": {
+      "type": "seq2seq",
+      "sizes": {
+        "small": "google/flan-t5-small",
+        "base": "google/flan-t5-base",
+        "large": "google/flan-t5-large"
+      }
+    },
+    "t5": {
+      "type": "seq2seq",
+      "sizes": {
+        "small": "t5-small",
+        "base": "t5-base",
+        "large": "t5-large"
+      }
+    },
+    "gpt2": {
+      "type": "causal",
+      "training": {
+        "learning_rate": 1e-05,
+        "per_device_train_batch_size": 16,
+        "per_device_eval_batch_size": 16
+      },
+      "sizes": {
+        "small": "gpt2",
+        "base": "gpt2-medium",
+        "large": "gpt2-large"
+      }
+    }
+  }
+}
+
