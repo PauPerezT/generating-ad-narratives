@@ -1,10 +1,10 @@
 # Model Coverage
 
-This repository now reflects the model families described in the paper and the additional code sources originally shared during repository assembly.
+This document maps the paper's model families and shared notebooks to the code included in this repository.
 
 ## Paper Models
 
-| Model family | Sizes in paper | Standardized entry point | Notes |
+| Model family | Sizes in paper | Entry point | Notes |
 |---|---|---|---|
 | GPT-2 | `small`, `base`, `large` | `scripts/train.py` | Decoder-only QA baseline using `Question: ... Answer:` formatting |
 | T5 | `small`, `base`, `large` | `scripts/train.py` | Seq2seq QA baseline |
@@ -13,16 +13,14 @@ This repository now reflects the model families described in the paper and the a
 | Mistral | `7b` | `scripts/train_chat_lora.py` | Chat-style LoRA fine-tuning |
 | Qwen3 | `8b` | `scripts/train_chat_lora.py` | Chat-style LoRA fine-tuning |
 
-## Additional Shared Code
+## Additional Included Workflows
 
-| Model family | Source context | Standardized status |
+| Model family | Source context | Repository implementation |
 |---|---|---|
-| DeepSeek | Shared source folder and Qwen/DeepSeek Colab notebook | Included as `deepseek-r1-qwen` in `scripts/train_chat_lora.py` for experimental chat-style training |
-| Colab / Unsloth workflows | Shared Qwen and Mistral notebooks | Standardized Colab notebook added under `colab/` |
+| DeepSeek | Shared source folder and Qwen/DeepSeek notebook workflow | Included as `deepseek-r1-qwen` in `scripts/train_chat_lora.py` |
+| Colab / Unsloth workflows | Shared Qwen and Mistral notebooks | Included in `colab/finetune_chat_models.ipynb` |
 
-## Source Provenance
-
-The repository structure was aligned against these source files and notebooks:
+## Source Files Reflected In This Repository
 
 - `1_finetuning_gpt2.py`
 - `1_finetuning_t5.py`
@@ -36,6 +34,6 @@ The repository structure was aligned against these source files and notebooks:
 - `ChatML + chat templates + Qwen full example.ipynb`
 - `Another copy of Copy of ChatML + chat templates + Mistral 7b full example.ipynb`
 
-## Security Cleanup
+## Credentials
 
-Original shared scripts contained hard-coded private credentials for Weights & Biases and Hugging Face. The standardized repo intentionally removes those secrets and expects credentials via environment variables such as `HF_TOKEN` and normal `wandb login` workflows.
+The repository expects credentials through environment variables and standard login flows such as `HF_TOKEN` and `wandb login`.
