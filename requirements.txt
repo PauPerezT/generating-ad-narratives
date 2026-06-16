@@ -1,0 +1,10 @@
+datasets
+nltk
+numpy
+pandas
+rouge-score
+scikit-learn
+torch
+transformers
+openpyxl
+
