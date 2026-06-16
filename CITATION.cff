@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite the paper below."
+title: "generating-ad-narratives"
+type: software
+authors:
+  - family-names: "Perez-Toro"
+    given-names: "Paula Andrea"
+    email: "paula.andrea.perez@fau.de"
+    affiliation: "Friedrich-Alexander-Universitat Erlangen-Nurnberg; University of Antioquia"
+  - family-names: "Almizel"
+    given-names: "Mahmoud"
+    affiliation: "Friedrich-Alexander-Universitat Erlangen-Nurnberg"
+  - family-names: "Noth"
+    given-names: "Elmar"
+    affiliation: "Friedrich-Alexander-Universitat Erlangen-Nurnberg"
+  - family-names: "Maier"
+    given-names: "Andreas"
+    affiliation: "Friedrich-Alexander-Universitat Erlangen-Nurnberg"
+  - family-names: "Arias-Vergara"
+    given-names: "Tomas"
+    affiliation: "Friedrich-Alexander-Universitat Erlangen-Nurnberg; University of Antioquia"
+repository-code: "https://github.com/PauPerezT/generating-ad-narratives"
+license: "MIT"
+preferred-citation:
+  type: article
+  title: "Generating Alzheimer's Narratives Using Large Language Models"
+  authors:
+    - family-names: "Perez-Toro"
+      given-names: "Paula Andrea"
+    - family-names: "Almizel"
+      given-names: "Mahmoud"
+    - family-names: "Noth"
+      given-names: "Elmar"
+    - family-names: "Maier"
+      given-names: "Andreas"
+    - family-names: "Arias-Vergara"
+      given-names: "Tomas"
+  journal: "Manuscript in preparation"
+  year: 2026
+  url: "https://github.com/PauPerezT/generating-ad-narratives"

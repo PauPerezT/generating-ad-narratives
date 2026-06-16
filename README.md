@@ -158,3 +158,9 @@ Open `colab/finetune_chat_models.ipynb` for the notebook workflow for Mistral an
 - `gpt2` uses the mapping `small -> gpt2`, `base -> gpt2-medium`, `large -> gpt2-large`.
 - Chat models use shared LoRA defaults with minimal family-specific overrides.
 - The default configuration uses `seed = 42` with centralized training and generation settings in `configs/experiments.json`.
+
+## License and Citation
+
+- Code in this repository is released under the `MIT` License. See `LICENSE`.
+- Citation metadata for GitHub and reference managers is provided in `CITATION.cff`.
+- If you use this repository, please cite: `Perez-Toro, P. A., Almizel, M., Noth, E., Maier, A., and Arias-Vergara, T. Generating Alzheimer's Narratives Using Large Language Models.`
