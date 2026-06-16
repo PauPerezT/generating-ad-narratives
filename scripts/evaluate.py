@@ -27,8 +27,12 @@ from ad_narratives.shared import (  # noqa: E402
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--family", choices=["flan-t5", "t5", "gpt2"], required=True)
-    parser.add_argument("--size", choices=["small", "base", "large"], required=True)
+    parser.add_argument(
+        "--family",
+        choices=["flan-t5", "t5", "gpt2", "llama2", "mistral", "qwen3", "deepseek-r1-qwen"],
+        required=True,
+    )
+    parser.add_argument("--size", choices=["small", "base", "large", "7b", "8b"], required=True)
     parser.add_argument("--group", choices=["AD", "HC"], required=True)
     parser.add_argument("--data-dir", required=True)
     parser.add_argument("--config", default=str(REPO_ROOT / "configs" / "experiments.json"))
@@ -54,6 +58,15 @@ def load_model_and_tokenizer(model_dir, model_type):
 def generate_answer(model, tokenizer, device, model_type, prompt, generation_config, prefix):
     if model_type == "seq2seq":
         input_text = prefix + prompt
+    elif model_type == "chat_lora":
+        if tokenizer.chat_template:
+            input_text = tokenizer.apply_chat_template(
+                [{"role": "user", "content": prompt}],
+                tokenize=False,
+                add_generation_prompt=True,
+            )
+        else:
+            input_text = f"User: {prompt}\nAssistant:"
     else:
         input_text = f"Question: {prompt} Answer:"
 
@@ -70,9 +83,13 @@ def generate_answer(model, tokenizer, device, model_type, prompt, generation_con
         do_sample=generation_config["do_sample"],
         pad_token_id=tokenizer.pad_token_id,
     )
-    decoded = tokenizer.decode(output[0], skip_special_tokens=True).strip()
-    if model_type == "causal" and "Answer:" in decoded:
-        decoded = decoded.split("Answer:", 1)[1].strip()
+    if model_type == "seq2seq":
+        decoded = tokenizer.decode(output[0], skip_special_tokens=True).strip()
+    else:
+        input_length = encoded["input_ids"].shape[1]
+        decoded = tokenizer.decode(output[0][input_length:], skip_special_tokens=True).strip()
+        if model_type == "causal" and "Answer:" in decoded:
+            decoded = decoded.split("Answer:", 1)[1].strip()
     return decoded
 
 
@@ -143,4 +160,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

@@ -3,6 +3,7 @@
   "prefix": "answer the question: ",
   "max_source_length": 128,
   "max_target_length": 128,
+  "max_chat_length": 512,
   "training": {
     "learning_rate": 0.0001,
     "num_train_epochs": 20,
@@ -24,6 +25,36 @@
     "top_p": 0.95,
     "temperature": 0.7,
     "do_sample": true
+  },
+  "chat_lora": {
+    "learning_rate": 0.0002,
+    "num_train_epochs": 20,
+    "per_device_train_batch_size": 8,
+    "per_device_eval_batch_size": 8,
+    "gradient_accumulation_steps": 1,
+    "weight_decay": 0.01,
+    "save_total_limit": 2,
+    "early_stopping_patience": 5,
+    "evaluation_strategy": "epoch",
+    "save_strategy": "epoch",
+    "logging_strategy": "epoch",
+    "optim": "paged_adamw_8bit",
+    "lr_scheduler_type": "constant",
+    "warmup_ratio": 0.03,
+    "max_grad_norm": 0.3,
+    "lora_r": 16,
+    "lora_alpha": 16,
+    "lora_dropout": 0.0,
+    "load_in_4bit": true,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ]
   },
   "models": {
     "flan-t5": {
@@ -54,7 +85,34 @@
         "base": "gpt2-medium",
         "large": "gpt2-large"
       }
+    },
+    "llama2": {
+      "type": "chat_lora",
+      "prompt_style": "chat",
+      "sizes": {
+        "7b": "meta-llama/Llama-2-7b-chat-hf"
+      }
+    },
+    "mistral": {
+      "type": "chat_lora",
+      "prompt_style": "chat",
+      "sizes": {
+        "7b": "mistralai/Mistral-7B-Instruct-v0.2"
+      }
+    },
+    "qwen3": {
+      "type": "chat_lora",
+      "prompt_style": "chat",
+      "sizes": {
+        "8b": "Qwen/Qwen3-8B"
+      }
+    },
+    "deepseek-r1-qwen": {
+      "type": "chat_lora",
+      "prompt_style": "chat",
+      "sizes": {
+        "8b": "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
+      }
     }
   }
 }
-

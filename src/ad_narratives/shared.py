@@ -33,6 +33,24 @@ def build_run_name(family, size, group):
     return f"{family}_{size}_{group}"
 
 
+def format_chat_prompt(tokenizer, question, answer=None, add_generation_prompt=False):
+    messages = [{"role": "user", "content": str(question)}]
+    if answer is not None:
+        messages.append({"role": "assistant", "content": str(answer)})
+
+    if getattr(tokenizer, "chat_template", None):
+        return tokenizer.apply_chat_template(
+            messages,
+            tokenize=False,
+            add_generation_prompt=add_generation_prompt,
+        )
+
+    text = f"User: {question}"
+    if answer is None:
+        return text + "\nAssistant:"
+    return text + f"\nAssistant: {answer}"
+
+
 def get_data_paths(data_dir, group):
     data_dir = Path(data_dir)
     return {

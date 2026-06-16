@@ -1,6 +1,7 @@
 from .shared import (
     build_run_name,
     ensure_nltk,
+    format_chat_prompt,
     get_data_paths,
     get_run_paths,
     load_config,
