@@ -17,7 +17,6 @@ This document maps the paper's model families and shared notebooks to the code i
 
 | Model family | Source context | Repository implementation |
 |---|---|---|
-| DeepSeek | Shared source folder and Qwen/DeepSeek notebook workflow | Included as `deepseek-r1-qwen` in `scripts/train_chat_lora.py` |
 | Colab / Unsloth workflows | Shared Qwen and Mistral notebooks | Included in `colab/finetune_chat_models.ipynb` |
 
 ## Source Files Reflected In This Repository
@@ -30,7 +29,6 @@ This document maps the paper's model families and shared notebooks to the code i
 - `1_finetuning_llama.py`
 - `finetuning_llama2.py`
 - `1_finetuning_Mistral.py`
-- `1_finetuning_deepseek.py`
 - `ChatML + chat templates + Qwen full example.ipynb`
 - `Another copy of Copy of ChatML + chat templates + Mistral 7b full example.ipynb`
 

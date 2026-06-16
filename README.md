@@ -1,7 +1,7 @@
 # Generating AD Narratives
 
 <p align="center">
-  Synthetic narrative generation for Alzheimer's disease research using GPT-2, T5, Flan-T5, LLaMA-2, Mistral, Qwen3, and DeepSeek-style chat models.
+  Synthetic narrative generation for Alzheimer's disease research using GPT-2, T5, Flan-T5, LLaMA-2, Mistral, and Qwen3.
 </p>
 
 <p align="center">
@@ -16,7 +16,7 @@ This repository accompanies the paper on synthetic narrative generation for Alzh
 - Task: generate AD and HC narratives from interviewer-participant QA pairs
 - Scenarios: `Human-to-Bot` and `Bot-to-Bot`
 - Downstream task: synthetic data augmentation for text-based AD detection
-- Model families: GPT-2, T5, Flan-T5, LLaMA-2, Mistral, Qwen3, and DeepSeek-style chat workflows
+- Model families: GPT-2, T5, Flan-T5, LLaMA-2, Mistral, and Qwen3
 
 ## Methodology
 
@@ -54,15 +54,13 @@ Key findings from the paper:
 | LLaMA-2 | `7b` | `scripts/train_chat_lora.py` | Chat-style LoRA fine-tuning |
 | Mistral | `7b` | `scripts/train_chat_lora.py` | Chat-style LoRA fine-tuning |
 | Qwen3 | `8b` | `scripts/train_chat_lora.py` | Chat-style LoRA fine-tuning |
-| DeepSeek-R1-Qwen | `8b` | `scripts/train_chat_lora.py` | DeepSeek-style chat training workflow |
-
 Model coverage and source mapping are documented in `docs/model_coverage.md`.
 
 ## Repository Layout
 
 - `configs/experiments.json`: shared training, generation, and model configuration
 - `scripts/train.py`: training for GPT-2, T5, and Flan-T5
-- `scripts/train_chat_lora.py`: LoRA fine-tuning for LLaMA-2, Mistral, Qwen3, and DeepSeek-style runs
+- `scripts/train_chat_lora.py`: LoRA fine-tuning for LLaMA-2, Mistral, and Qwen3
 - `scripts/evaluate.py`: generation and automatic metrics
 - `scripts/embed_texts.py`: embedding extraction for generated or ground-truth text
 - `docs/model_coverage.md`: paper-to-code coverage map
@@ -107,7 +105,6 @@ python scripts/train.py --family flan-t5 --size base --group AD --data-dir ./dat
 python scripts/train_chat_lora.py --family llama2 --size 7b --group AD --data-dir ./data
 python scripts/train_chat_lora.py --family mistral --size 7b --group HC --data-dir ./data
 python scripts/train_chat_lora.py --family qwen3 --size 8b --group AD --data-dir ./data
-python scripts/train_chat_lora.py --family deepseek-r1-qwen --size 8b --group HC --data-dir ./data
 ```
 
 For gated checkpoints such as LLaMA-2, export `HF_TOKEN` before running.
@@ -128,7 +125,7 @@ python scripts/embed_texts.py --input artifacts/groundtruth/Groundtruth.csv --te
 
 ### 6. Use the Colab workflow
 
-Open `colab/finetune_chat_models.ipynb` for the notebook workflow for Mistral, Qwen, and DeepSeek-style experiments.
+Open `colab/finetune_chat_models.ipynb` for the notebook workflow for Mistral and Qwen experiments.
 
 ## Notes
 
